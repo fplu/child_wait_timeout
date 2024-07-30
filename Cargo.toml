@@ -1,0 +1,45 @@
+[package]
+name = "child_wait_timeout"
+version = "0.1.0"
+edition = "2021"
+description = "A wait timeout in rust"
+repository = "https://github.com/fplu/child_wait_timeout"
+readme = "README.md"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[[bench]]
+name = "wait_timeout_benchmark"
+harness = false
+
+[features]
+default = []
+pidfd = []
+thread = []
+signal = []
+
+[dependencies]
+
+[build-dependencies]
+cc = "1.0"
+
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = [
+    "wincon",
+    "processenv",
+    "processthreadsapi",
+    "synchapi",
+    "winbase",
+    "minwinbase",
+    "errhandlingapi",
+    "winerror",
+] }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[dev-dependencies]
+utilities = { path = "utilities" }
+criterion = "0.5"
